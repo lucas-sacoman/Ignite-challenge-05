@@ -80,6 +80,20 @@ export default function Post({
     }
   );
 
+  const isPostEdited =
+    post.first_publication_date !== post.last_publication_date;
+
+  let editionDate;
+  if (isPostEdited) {
+    editionDate = format(
+      new Date(post.last_publication_date),
+      "'* editado em' dd MMM yyyy', às' H':'m",
+      {
+        locale: ptBR,
+      }
+    );
+  }
+
   return (
     <>
       <Header />
@@ -102,6 +116,7 @@ export default function Post({
                 {`${readTime} min`}
               </li>
             </ul>
+            <span>{isPostEdited && editionDate}</span>
           </div>
 
           {post.data.content.map(content => {
